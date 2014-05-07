@@ -1,5 +1,5 @@
 #FROM ubuntu:12.04
-FROM debian:sid
+FROM debian:testing
 
 MAINTAINER Olivier Berger <olivier.berger@telecom-sudparis.eu>
 
