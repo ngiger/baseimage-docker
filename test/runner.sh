@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 set -e
 
 function abort()
@@ -18,6 +18,7 @@ PWD=`pwd`
 
 echo " --> Starting insecure container"
 ID=`docker run -d -v $PWD/test:/test $NAME:$VERSION /sbin/my_init --enable-insecure-key`
+echo "ID is $ID"
 sleep 1
 
 echo " --> Obtaining IP"
@@ -25,6 +26,7 @@ IP=`docker inspect $ID | grep IPAddress | sed -e 's/.*: "//; s/".*//'`
 if [[ "$IP" = "" ]]; then
 	abort "Unable to obtain container IP"
 fi
+echo "IP is $IP"
 
 trap cleanup EXIT
 
