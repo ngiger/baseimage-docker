@@ -1,0 +1,18 @@
+# The following changes were made by Niklaus
+
+# Permanently enable the insecure key
+# Added my personal proxy
+# Ported to use debian:7.4 as base
+# additionally install syslog-ng, ruby1.9, puppet 3.5.1 and librarian-puppet 1.0.3 
+# for configuration with puppet
+
+To build it run @make build@
+
+To run it interactively
+* docker run -i -t ngiger/baseimage-wheezy:0.2 /bin/bash
+
+To run it as a service
+ docker run -d -P 2222:22 -v /something:/something  ngiger/baseimage-wheezy:0.2
+use docker-bash container-id to run a bash shell inside the container
+
+# apt-get install ruby1.9 # pulls in Need to get 265 MB of archives. After this operation, 716 MB of additional disk space will be used.

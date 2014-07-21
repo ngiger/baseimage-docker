@@ -1,3 +1,27 @@
+## 0.9.11 (release date: 2014-06-24)
+
+ * Introduced the `docker-bash` tool. This is a shortcut tool for logging into a container using SSH. Usage: `docker-bash <CONTAINER ID>`. See the README for details.
+ * Fixed various process waiting issues in `my_init`. Closes GH-27, GH-82 and GH-83. Thanks to André Luiz dos Santos and Paul Annesley.
+ * The `ca-certificates` package is now installed by default. This is because we include `apt-transport-https`, but Ubuntu 14.04 no longer installs `ca-certificates` by default anymore. Closes GH-73.
+ * Output print by Runit services are now redirected to the Docker logs instead of to proctitle. Thanks to Paul Annesley.
+ * Container environment variables are now made available to SSH root shells. If you login with SSH through a non-root account, then container environment variables are only made available if that user is a member of the `docker_env` group. Thanks to Bernard Potocki.
+ * `add-apt-repository` is now installed by default. Closes GH-74.
+ * Various minor fixes and contributions thanks to yebyen, John Eckhart, Christoffer Sawicki and Brant Fitzsimmons.
+
+## 0.9.10 (release date: 2014-05-12)
+
+ * Upgraded to Ubuntu 14.04 (Trusty). We will no longer release images based on 12.04.
+   Thanks to contributions by mpeterson, Paul Jimenez, Santiago M. Mola and Kingdon Barrett.
+ * Fixed a problem with my_init not correctly passing child processes' exit status. Fixes GH-45.
+ * When reading environment variables from /etc/container_environment, the trailing newline (if any) is ignored. This makes commands like this work, without unintentially adding a newline to the environment variable value:
+
+        echo my_value > /etc/container_environment/FOO
+
+   If you intended on adding a newline to the value, ensure you have *two* trailing newlines:
+
+        echo -e "my_value\n" > /etc/container_environment/FOO
+ * It was not possible to use `docker run -e` to override environment variables defined in /etc/container_environment. This has been fixed (GH-52). Thanks to Stuart Campbell for reporting this bug.
+
 ## 0.9.9 (release date: 2014-03-25)
 
  * Fixed a problem with rssh. (Slawomir Chodnicki)

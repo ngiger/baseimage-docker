@@ -1,5 +1,6 @@
+# based on phusion/baseimage:0.9.11
 NAME = ngiger/baseimage-wheezy
-VERSION = 0.9.0
+VERSION = 0.2
 
 .PHONY: all build test tag_latest release ssh
 
@@ -20,7 +21,7 @@ release: test tag_latest
 	@echo "*** Don't forget to create a tag. git tag rel-$(VERSION) && git push origin rel-$(VERSION)"
 
 ssh:
-	chmod 600 image/insecure_key.pub
+	chmod 600 image/insecure_key
 	@ID=$$(docker ps | grep -F "$(NAME):$(VERSION)" | awk '{ print $$1 }') && \
 		if test "$$ID" = ""; then echo "Container is not running."; exit 1; fi && \
 		IP=$$(docker inspect $$ID | grep IPAddr | sed 's/.*: "//; s/".*//') && \

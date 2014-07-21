@@ -26,5 +26,6 @@ RUN /build/prepare.sh && \
 # ENV LC_ALL C.UTF-8
 
 CMD ["/sbin/my_init"]
+RUN /usr/sbin/enable_insecure_key
 
 # EXPOSE 22

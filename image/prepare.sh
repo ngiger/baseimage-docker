@@ -13,6 +13,8 @@ export INITRD=no
 mkdir -p /etc/container_environment
 echo -n no > /etc/container_environment/INITRD
 
+echo 'Acquire::http::Proxy "http://172.25.1.70:3142";' > /etc/apt/apt.conf.d/proxy
+
 ## Enable Debian sid main
 cp /build/sources.list /etc/apt/sources.list
 apt-get update
@@ -39,9 +41,13 @@ apt-get dist-upgrade -y --no-install-recommends
 ## Install add-apt-repository
 $minimal_apt_get_install software-properties-common
 
-## Fix locale.
-#$minimal_apt_get_install language-pack-en
-#locale-gen en_US
-$minimal_apt_get_install locales
-dpkg-reconfigure locales && locale-gen C.UTF-8 && /usr/sbin/update-locale LANG=C.UTF-8
+## TODO: Fix locale.
+# $minimal_apt_get_install language-pack-en
+# locale-gen en_US
 
+apt-get build-dep --yes ruby ruby-sqlite3
+apt-get install --yes imagemagick libmagickwand-dev ruby ruby-dev build-essential libsqlite3-dev git
+gem install --no-ri --no-rdoc bundler
+gem install --no-ri --no-rdoc puppet           --version=3.5.1
+gem install --no-ri --no-rdoc librarian-puppet --version=1.0.3
+apt-get clean
